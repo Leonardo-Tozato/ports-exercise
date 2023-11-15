@@ -11,7 +11,7 @@ type memDB struct {
 	ports domain.PortsData
 }
 
-func NewMemDB() ports.Repository {
+func New() ports.Repository {
 	return &memDB{ports: make(domain.PortsData)}
 }
 
