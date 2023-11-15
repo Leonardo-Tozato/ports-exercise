@@ -18,7 +18,7 @@ func NewJsonHandler(service port.Service) *JsonHandler {
 	}
 }
 
-// HandleUpsertStream HandleUpsert process the JSON file line by line streaming it
+// HandleUpsertStream HandleUpsert process the JSON file line by line
 func (h *JsonHandler) HandleUpsertStream(filePath string) (domain.PortData, error) {
 
 	file, err := os.Open(filePath)
@@ -43,6 +43,7 @@ func (h *JsonHandler) HandleUpsertStream(filePath string) (domain.PortData, erro
 		return nil, fmt.Errorf("Error reading JSON opening brace: %v\n", err)
 	}
 
+	var result domain.PortData
 	for decoder.More() {
 		keyToken, err := decoder.Token()
 		if err != nil {
@@ -52,15 +53,15 @@ func (h *JsonHandler) HandleUpsertStream(filePath string) (domain.PortData, erro
 
 		var value domain.Port
 		if err := decoder.Decode(&value); err != nil {
-			return nil, fmt.Errorf("Error decoding JSON value: %v\n", err)
+			return nil, fmt.Errorf("Error decoding port value: %v\n", err)
 		}
 
 		portData := domain.PortData{
 			key: value,
 		}
 
-		h.service.Upsert(portData)
+		result = h.service.Upsert(portData)
 	}
 
-	return h.service.FindAll(), nil
+	return result, nil
 }

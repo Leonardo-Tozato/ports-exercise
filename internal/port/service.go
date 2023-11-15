@@ -3,8 +3,7 @@ package port
 import "ports-exercise/m/internal/port/domain"
 
 type Service interface {
-	Upsert(ports domain.PortData)
-	FindAll() domain.PortData
+	Upsert(ports domain.PortData) domain.PortData
 }
 
 type service struct {
@@ -17,10 +16,6 @@ func NewService(repository Repository) Service {
 	}
 }
 
-func (s *service) Upsert(ports domain.PortData) {
-	s.repository.Upsert(ports)
-}
-
-func (s *service) FindAll() domain.PortData {
-	return s.repository.FindAll()
+func (s *service) Upsert(ports domain.PortData) domain.PortData {
+	return s.repository.Upsert(ports)
 }

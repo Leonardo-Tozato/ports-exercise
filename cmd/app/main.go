@@ -21,10 +21,13 @@ func main() {
 	// Set up signal handling
 	shutdown := make(chan os.Signal, 1)
 	signal.Notify(shutdown, syscall.SIGTERM, syscall.SIGINT)
+
+	// Set up dependencies
 	portsRepository := portsrepo.NewMemDB()
 	portsService := port.NewService(portsRepository)
 	portsHandler := portshdl.NewJsonHandler(portsService)
 
+	// Process input json
 	result, err := portsHandler.HandleUpsertStream(filePath)
 	if err != nil {
 		fmt.Println(err)

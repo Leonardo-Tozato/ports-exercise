@@ -16,10 +16,7 @@ func NewMemDB() port.Repository {
 }
 
 // Upsert the database ports collection
-func (repo *memDB) Upsert(ports domain.PortData) {
+func (repo *memDB) Upsert(ports domain.PortData) domain.PortData {
 	maps.Copy(repo.ports, ports)
-}
-
-func (repo *memDB) FindAll() domain.PortData {
 	return repo.ports
 }
