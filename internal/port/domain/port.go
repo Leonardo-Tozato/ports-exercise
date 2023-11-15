@@ -13,4 +13,4 @@ type Port struct {
 	Code        string    `json:"code,omitempty"`
 }
 
-type PortsData map[string]Port
+type PortData map[string]Port

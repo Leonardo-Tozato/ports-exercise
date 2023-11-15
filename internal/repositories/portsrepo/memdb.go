@@ -2,20 +2,24 @@ package portsrepo
 
 import (
 	"maps"
-	"ports-exercise/m/internal/ports"
-	"ports-exercise/m/internal/ports/domain"
+	"ports-exercise/m/internal/port"
+	"ports-exercise/m/internal/port/domain"
 )
 
 // In memory key value database
 type memDB struct {
-	ports domain.PortsData
+	ports domain.PortData
 }
 
-func New() ports.Repository {
-	return &memDB{ports: make(domain.PortsData)}
+func NewMemDB() port.Repository {
+	return &memDB{ports: make(domain.PortData)}
 }
 
 // Upsert the database ports collection
-func (repo *memDB) Upsert(ports domain.PortsData) {
+func (repo *memDB) Upsert(ports domain.PortData) {
 	maps.Copy(repo.ports, ports)
+}
+
+func (repo *memDB) FindAll() domain.PortData {
+	return repo.ports
 }
